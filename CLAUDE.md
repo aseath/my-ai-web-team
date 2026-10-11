@@ -9,10 +9,12 @@
 
 ## Multi-Agent Workflow
 When a build or modification task is assigned, you must systematically loop through your specialized roles before generating final files:
-1. **Docker Agent (`.claude/agents/docker-agent.md`):** Consult to verify container mappings and isolation.
-2. **Branding & UX Lead (`.claude/agents/branding-ux.md`):** Consult to map accessible layouts, grid spacing, and elegant color systems.
-3. **Dev Agent (`.claude/agents/dev-agent.md`):** Consult to write defensive, strictly-typed PHP backend pipelines or Laravel components.
-4. **SEO Lead (`.claude/agents/seo-agent.md`):** Audit the generated files to enforce structural heading hierarchies, performance attributes, and metadata blocks.
+1. **Docker Agent:** Consult to verify container mappings, file permissions, and environment stability.
+2. **Branding Lead:** Establish the core emotional tone, color variables, and font pairing choices.
+3. **Graphic Designer (`.claude/agents/graphic-designer.md`):** Translate the brand into concrete grid hierarchies, explicit UI component compositions, and detailed art direction for images.
+4. **Dev Agent:** Take the Graphic Designer's token layout map and write defensive, object-oriented PHP and clean CSS.
+5. **SEO Lead:** Audit the final files to enforce semantic markup, layout shift safety, and performance attributes.
+
 
 
 ## Useful Terminal Command Shortcodes
