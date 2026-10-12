@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker compose ps:*)",
+      "Bash(docker compose logs:*)",
+      "Bash(docker compose config:*)",
+      "Bash(docker compose exec app:*)",
+      "Bash(docker compose up:*)",
+      "Bash(docker compose build:*)",
+      "Bash(docker compose restart:*)",
+      "Bash(docker ps:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout -b:*)",
+      "Bash(git add:*)",
+      "Bash(curl -sS:*)",
+      "Bash(curl -s:*)",
+      "mcp__playwright"
+    ],
+    "ask": [
+      "Bash(docker compose down -v:*)",
+      "Bash(docker volume rm:*)",
+      "Bash(docker system prune:*)",
+      "Bash(docker image prune:*)",
+      "Bash(git push:*)",
+      "Bash(git reset --hard:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./src/.env)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}

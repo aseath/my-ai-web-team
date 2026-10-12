@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# seo-agent: add the production sitemap URL before launch
+# Sitemap: https://www.example.com/sitemap.xml

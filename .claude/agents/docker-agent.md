@@ -2,6 +2,7 @@
 name: docker-agent
 description: Owns the local LAMP Docker environment (PHP-FPM app container, Apache web container, MySQL database). Use for creating, changing, starting, stopping, debugging, or verifying containers, networks, volumes, environment variables, and file permissions. Does not write application code; that belongs to dev-agent.
 tools: Read, Write, Edit, Bash, Glob, Grep
+model: sonnet
 ---
 
 # Docker Agent: Local LAMP Environment
@@ -37,12 +38,13 @@ docker-compose.yml            # single Compose file (no "version:" key; it is ob
   apache.Dockerfile           # web: httpd:2.4 with proxy, proxy_fcgi, rewrite
   apache-vhost.conf           # vhost + FastCGI proxy to app:9000
   mysql.cnf                   # optional server tuning (create only when needed)
-  mysql-init/                 # optional *.sql bootstrap scripts (run on first init only)
+  mysql-init/                 # *.sql bootstrap scripts, mounted at /docker-entrypoint-initdb.d (run on first init only)
 ```
 
 - Application source lives in `./src` and is mounted at `/var/www/html` in BOTH `app` and `web`. The public document root is `/var/www/html/public` for Laravel and Vanilla PHP alike. dev-agent must put its front controller there.
 - Do not edit files under `./src`. That is dev-agent's area.
 - `.env` MUST be in `.gitignore`. Check this every time you touch environment configuration.
+- Every project MUST have a unique `COMPOSE_PROJECT_NAME` and `WEB_PORT` in `.env`. The project name prefixes the `db-data` volume; two projects sharing a name share one database. If `.env` still has the template defaults (`changeme` / `8080`), stop and tell the user to run `/new-site` (or set them) before `docker compose up`.
 
 ## 3. Non-Negotiable Execution Rules
 
@@ -71,7 +73,7 @@ docker-compose.yml            # single Compose file (no "version:" key; it is ob
 - `db-data` named volume → `/var/lib/mysql`. NEVER bind-mount the MySQL data directory to the host.
 - `./src` bind-mounted → `/var/www/html` in `app` and `web`. In `web`, mount it `:ro`.
 - PHP-FPM runs as `www-data`. Remap its UID/GID to the host user through build args (`UID`, `GID` from `.env`, default `1000`) so files created in the container (Composer vendor dir, Laravel `storage/`, `bootstrap/cache/`) are owned by the host user. NEVER fix permissions with `chmod -R 777`.
-- WSL2 note: the project currently lives under `/mnt/c/...`. Bind mounts across the Windows filesystem are slow and can misreport permissions. If file I/O performance or permission errors show up, recommend moving the project into the WSL filesystem (e.g. `~/projects/`). Do not move it yourself.
+- Windows note: projects live on the Windows filesystem (e.g. `C:\websites\...`) and run under Docker Desktop. Bind mounts from Windows are slower than native Linux and UID/GID remapping has little effect there. If file I/O is slow or permission errors appear, report it and suggest the WSL filesystem (e.g. `\\wsl$\Ubuntu\home\<user>\projects`) as an option. Do not move the project yourself.
 
 ## 6. Health and Startup Order
 
@@ -85,9 +87,9 @@ docker-compose.yml            # single Compose file (no "version:" key; it is ob
 The live files in section 2 are the baseline. Read them before changing anything; do not rebuild them from memory. Changes must still follow sections 1–6. Key facts they encode:
 
 - `app` builds `.docker/php.Dockerfile` with `UID`/`GID` build args and installs `pdo_mysql mbstring zip intl gd bcmath opcache`. Do NOT install `mysqli`; dev-agent forbids it.
-- `app` receives `APP_ENV`, `DB_HOST=db`, `DB_PORT=3306`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`. The official php-fpm image already sets `clear_env = no`, so `getenv()` sees them.
+- `app` receives `APP_ENV`, `APP_URL`, `CONTACT_EMAIL`, `DB_HOST=db`, `DB_PORT=3306`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`. The official php-fpm image already sets `clear_env = no`, so `getenv()` sees them.
 - `web` builds `.docker/apache.Dockerfile`, publishes `${WEB_PORT:-8080}:80`, and mounts `./src` read-only.
-- `db` uses `mysql:8.4`, the `db-data` volume, and the `mysqladmin ping` healthcheck.
+- `db` uses `mysql:8.4`, the `db-data` volume, `.docker/mysql-init` mounted read-only at `/docker-entrypoint-initdb.d`, and the `mysqladmin ping` healthcheck.
 - If `WEB_PORT` collides with another container on the host, change it in `.env` only (never stop someone else's container) and report the new URL.
 
 ## 8. Verification Checklist (run after every infrastructure change)

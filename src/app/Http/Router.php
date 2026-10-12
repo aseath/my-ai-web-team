@@ -42,6 +42,7 @@ final class Router
 
         if ($handlers === null) {
             return Response::view('error', [
+                'meta' => ['robots' => 'noindex'],
                 'title' => 'Page not found',
                 'message' => 'The page you requested could not be found.',
             ], 404);
@@ -58,6 +59,7 @@ final class Router
             }
 
             return Response::view('error', [
+                'meta' => ['robots' => 'noindex'],
                 'title' => 'Method not allowed',
                 'message' => 'This request method is not supported for this page.',
             ], 405)->withHeader('Allow', implode(', ', array_unique($allowed)));

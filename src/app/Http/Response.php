@@ -21,13 +21,25 @@ final class Response
     /**
      * @param array<string, mixed> $data
      */
-    public static function view(string $template, array $data = [], int $status = 200): self
-    {
+    public static function view(
+        string $template,
+        array $data = [],
+        int $status = 200,
+        ?string $layout = View::DEFAULT_LAYOUT,
+    ): self {
         return new self(
-            View::render($template, $data),
+            View::render($template, $data, $layout),
             $status,
             ['Content-Type' => 'text/html; charset=UTF-8'],
         );
+    }
+
+    /**
+     * 303 See Other: the correct status after a successful POST (Post/Redirect/Get).
+     */
+    public static function redirect(string $location, int $status = 303): self
+    {
+        return new self('', $status, ['Location' => $location]);
     }
 
     /**
