@@ -27,7 +27,7 @@ final class SendContactEnquiry
     {
         $statement = Connection::get()->prepare(
             'INSERT INTO contact_submissions (name, email, phone, message, ip_address, user_agent)
-             VALUES (:name, :email, :phone, :message, :ip_address, :user_agent)'
+             VALUES (:name, :email, :phone, :message, :ip_address, :user_agent)',
         );
 
         $statement->execute([
