@@ -79,6 +79,7 @@ try {
 
     try {
         Response::view('error', [
+            'meta' => ['robots' => 'noindex'],
             'title' => 'Something went wrong',
             'message' => 'An unexpected error occurred. Please try again later.',
         ], 500)->send();

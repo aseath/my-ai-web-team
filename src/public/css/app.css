@@ -1,3 +1,113 @@
-:root { color-scheme: light dark; }
-body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1rem; line-height: 1.5; }
-code { background: rgba(127, 127, 127, 0.15); padding: 0.1rem 0.3rem; border-radius: 3px; }
+/*
+ * Base styles and components. Use tokens from tokens.css; avoid hard-coded values.
+ */
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+body, h1, h2, h3, h4, p, figure, blockquote, ul, ol { margin: 0; }
+img, picture, svg, video { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; }
+
+/* Base */
+html { -webkit-text-size-adjust: 100%; }
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-text);
+    font-size: var(--step-0);
+    line-height: var(--leading-body);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main { flex: 1; }
+main:focus { outline: none; }
+h1, h2, h3 { font-family: var(--font-display); line-height: var(--leading-tight); }
+h1 { font-size: var(--step-5); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+* + h2, * + h3 { margin-top: var(--space-l); }
+p + p, p + ul, ul + p { margin-top: var(--space-s); }
+a { color: var(--color-accent); text-underline-offset: 0.15em; }
+a:hover { text-decoration-thickness: 2px; }
+code { background: var(--color-border); padding: 0.1rem 0.3rem; border-radius: var(--radius-s); }
+:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Layout */
+.container { width: min(100% - 2 * var(--space-m), var(--container-max)); margin-inline: auto; }
+.section { padding-block: var(--space-2xl); }
+.section > * + * { margin-top: var(--space-m); }
+.prose { max-width: var(--measure); }
+
+/* Skip link */
+.skip-link {
+    position: absolute;
+    left: var(--space-s);
+    top: -10rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: var(--space-2xs) var(--space-s);
+    z-index: 100;
+}
+.skip-link:focus { top: var(--space-s); }
+
+/* Header */
+.site-header { border-bottom: 1px solid var(--color-border); padding-block: var(--space-s); }
+.site-header__inner { display: flex; flex-wrap: wrap; gap: var(--space-s); align-items: center; justify-content: space-between; }
+.site-header__brand { font-family: var(--font-display); font-size: var(--step-1); color: var(--color-text); text-decoration: none; }
+.site-nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-m); }
+.site-nav a { color: var(--color-text); text-decoration: none; padding-block: var(--space-2xs); }
+.site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--color-border); padding-block: var(--space-l); color: var(--color-muted); font-size: var(--step--1); }
+.site-footer p + p { margin-top: var(--space-2xs); }
+.site-footer__links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-m); margin-top: var(--space-s); }
+
+/* Buttons */
+.button {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    border: 0;
+    border-radius: var(--radius-m);
+    padding: var(--space-xs) var(--space-m);
+    min-height: 44px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: filter 0.15s ease;
+}
+.button:hover { filter: brightness(1.1); }
+
+/* Notices */
+.notice { border-left: 4px solid; padding: var(--space-s) var(--space-m); background: var(--color-surface); max-width: var(--measure); }
+.notice--success { border-color: var(--color-success); }
+.notice--error { border-color: var(--color-error); }
+
+/* Forms */
+.form { display: grid; gap: var(--space-m); max-width: 40rem; }
+.form__field { display: grid; gap: var(--space-3xs); }
+.form__field label { font-weight: 600; }
+.form__optional { font-weight: 400; color: var(--color-muted); }
+.form input, .form textarea {
+    width: 100%;
+    padding: var(--space-xs);
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius-s);
+    background: var(--color-surface);
+    color: var(--color-text);
+    min-height: 44px;
+}
+.form [aria-invalid="true"] { border-color: var(--color-error); border-width: 2px; }
+.form__error { color: var(--color-error); font-size: var(--step--1); }
+.form__privacy { font-size: var(--step--1); color: var(--color-muted); }
+.form__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }

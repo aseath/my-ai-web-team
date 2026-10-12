@@ -3,3 +3,13 @@
 
 # Composer dependencies
 src/vendor/
+
+# QA screenshots and reports (regenerated)
+docs/qa/*
+!docs/qa/.gitkeep
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db

@@ -1,6 +1,6 @@
 {
     "name": "aiteam/app",
-    "description": "Vanilla PHP starter application.",
+    "description": "Vanilla PHP website starter (agency template).",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -27,5 +27,16 @@
         "sort-packages": true
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64"
+    },
+    "scripts": {
+        "lint": "php-cs-fixer check --diff",
+        "fix": "php-cs-fixer fix"
+    },
+    "scripts-descriptions": {
+        "lint": "Check PSR-12 / coding standards (no changes)",
+        "fix": "Apply coding standard fixes"
+    }
 }

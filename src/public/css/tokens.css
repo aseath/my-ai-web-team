@@ -1,0 +1,49 @@
+/*
+ * Design tokens. TEMPLATE DEFAULTS: graphic-designer replaces this file from docs/brand.md.
+ * Only custom properties and @font-face rules belong here; components live in app.css.
+ */
+
+:root {
+    /* Colour roles (names are fixed; values come from docs/brand.md) */
+    --color-bg: #fbfaf8;
+    --color-surface: #ffffff;
+    --color-text: #1c1b19;
+    --color-muted: #5d5a54;
+    --color-accent: #2f5d50;
+    --color-accent-contrast: #ffffff;
+    --color-border: #dcd8d0;
+    --color-success: #1f6b3a;
+    --color-error: #a3261b;
+
+    /* Typography */
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-text: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+    --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+    --step-2: clamp(1.44rem, 1.3rem + 0.7vw, 1.75rem);
+    --step-3: clamp(1.73rem, 1.5rem + 1.1vw, 2.2rem);
+    --step-4: clamp(2.07rem, 1.7rem + 1.8vw, 2.9rem);
+    --step-5: clamp(2.49rem, 1.9rem + 2.9vw, 3.8rem);
+    --leading-tight: 1.15;
+    --leading-body: 1.6;
+
+    /* Space */
+    --space-3xs: 0.25rem;
+    --space-2xs: 0.5rem;
+    --space-xs: 0.75rem;
+    --space-s: 1rem;
+    --space-m: 1.5rem;
+    --space-l: clamp(2rem, 1.6rem + 2vw, 3rem);
+    --space-xl: clamp(3rem, 2.4rem + 3vw, 4.5rem);
+    --space-2xl: clamp(4rem, 3rem + 5vw, 7rem);
+    --space-3xl: clamp(6rem, 4.5rem + 7.5vw, 10rem);
+
+    /* Shape, depth, layout */
+    --radius-s: 4px;
+    --radius-m: 8px;
+    --shadow-s: 0 1px 2px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.1);
+    --container-max: 72rem;
+    --measure: 65ch;
+    --focus-ring: 3px solid var(--color-accent);
+}
